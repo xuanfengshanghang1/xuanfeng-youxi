@@ -82,6 +82,9 @@ a:hover { color: var(--red); }
 .hero-subtitle { font-size: clamp(1.2rem, 3vw, 1.8rem); color: var(--text); margin-bottom: 12px; font-weight: 600; }
 .hero-tagline { font-size: 1.1rem; color: var(--red); margin-bottom: 32px; letter-spacing: 4px; font-weight: 700; }
 
+.hero-badges { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; margin-bottom: 32px; }
+.hero-badge { display: inline-block; padding: 8px 20px; border-radius: 20px; font-size: 15px; font-weight: 700; background: rgba(255,215,0,0.1); color: var(--gold); border: 1px solid rgba(255,215,0,0.3); }
+
 .hero-actions { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
 
 /* ===== 按钮 ===== */
@@ -188,6 +191,9 @@ a:hover { color: var(--red); }
 }
 .qq-btn { background: var(--red); }
 .qq-btn:hover { background: var(--red-dark); color: #fff; }
+.join-btn { background: linear-gradient(135deg, var(--gold), var(--gold-dark)); color: var(--bg-dark); font-weight: 900; animation: joinPulse 2s infinite; }
+.join-btn:hover { transform: scale(1.05); color: var(--bg-dark); }
+@keyframes joinPulse { 0%,100% { box-shadow: 0 0 0 0 rgba(255,215,0,0.4); } 50% { box-shadow: 0 0 16px 4px rgba(255,215,0,0.3); } }
 .wx-btn { background: #07c160; }
 .wx-btn:hover { background: #06a856; color: #fff; }
 .top-btn { background: var(--bg-card); border: 1px solid var(--border); }
