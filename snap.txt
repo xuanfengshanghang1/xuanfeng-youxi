@@ -1,0 +1,429 @@
+﻿{
+  "ok": true,
+  "command": "run",
+  "data": {
+    "browser_command": "snapshot",
+    "result": {
+      "success": true,
+      "data": {
+        "origin": "https://console.cloud.tencent.com/cos/bucket?bucket=xuanfengyouxi-com-1392808679&region=ap-guangzhou&type=basic",
+        "refs": {
+          "e1": {
+            "name": "基础数据统计",
+            "role": "heading"
+          },
+          "e10": {
+            "name": "",
+            "role": "generic"
+          },
+          "e100": {
+            "name": "",
+            "role": "generic"
+          },
+          "e101": {
+            "name": "",
+            "role": "group"
+          },
+          "e102": {
+            "name": "",
+            "role": "generic"
+          },
+          "e103": {
+            "name": "",
+            "role": "button"
+          },
+          "e11": {
+            "name": "",
+            "role": "generic"
+          },
+          "e12": {
+            "name": "",
+            "role": "generic"
+          },
+          "e13": {
+            "name": "",
+            "role": "generic"
+          },
+          "e14": {
+            "name": "",
+            "role": "generic"
+          },
+          "e15": {
+            "name": "腾讯云",
+            "role": "link"
+          },
+          "e16": {
+            "name": "控制台",
+            "role": "link"
+          },
+          "e17": {
+            "name": "",
+            "role": "generic"
+          },
+          "e18": {
+            "name": "备案",
+            "role": "link"
+          },
+          "e19": {
+            "name": "",
+            "role": "generic"
+          },
+          "e2": {
+            "name": "",
+            "role": "generic"
+          },
+          "e20": {
+            "name": "",
+            "role": "generic"
+          },
+          "e21": {
+            "name": "试用",
+            "role": "link"
+          },
+          "e22": {
+            "name": "",
+            "role": "generic"
+          },
+          "e23": {
+            "name": "",
+            "role": "generic"
+          },
+          "e24": {
+            "name": "",
+            "role": "generic"
+          },
+          "e25": {
+            "name": "",
+            "role": "generic"
+          },
+          "e26": {
+            "name": "",
+            "role": "generic"
+          },
+          "e27": {
+            "name": "",
+            "role": "listitem"
+          },
+          "e28": {
+            "name": "",
+            "role": "listitem"
+          },
+          "e29": {
+            "name": "",
+            "role": "listitem"
+          },
+          "e3": {
+            "name": "",
+            "role": "generic"
+          },
+          "e30": {
+            "name": "",
+            "role": "listitem"
+          },
+          "e31": {
+            "name": "",
+            "role": "listitem"
+          },
+          "e32": {
+            "name": "",
+            "role": "listitem"
+          },
+          "e33": {
+            "name": "",
+            "role": "listitem"
+          },
+          "e34": {
+            "name": "",
+            "role": "listitem"
+          },
+          "e35": {
+            "name": "",
+            "role": "listitem"
+          },
+          "e36": {
+            "name": "",
+            "role": "listitem"
+          },
+          "e37": {
+            "name": "",
+            "role": "listitem"
+          },
+          "e38": {
+            "name": "",
+            "role": "listitem"
+          },
+          "e39": {
+            "name": "",
+            "role": "listitem"
+          },
+          "e4": {
+            "name": "",
+            "role": "generic"
+          },
+          "e40": {
+            "name": "",
+            "role": "listitem"
+          },
+          "e41": {
+            "name": "",
+            "role": "listitem"
+          },
+          "e42": {
+            "name": "",
+            "role": "listitem"
+          },
+          "e43": {
+            "name": "",
+            "role": "listitem"
+          },
+          "e44": {
+            "name": "",
+            "role": "listitem"
+          },
+          "e45": {
+            "name": "",
+            "role": "listitem"
+          },
+          "e46": {
+            "name": "",
+            "role": "listitem"
+          },
+          "e47": {
+            "name": "",
+            "role": "generic"
+          },
+          "e48": {
+            "name": "xuanfengyouxi-com-1392808679",
+            "role": "link"
+          },
+          "e49": {
+            "name": "标准存储",
+            "role": "link"
+          },
+          "e5": {
+            "name": "",
+            "role": "generic"
+          },
+          "e50": {
+            "name": "智能分层存储",
+            "role": "link"
+          },
+          "e51": {
+            "name": "低频存储",
+            "role": "link"
+          },
+          "e52": {
+            "name": "归档存储",
+            "role": "link"
+          },
+          "e53": {
+            "name": "深度归档存储",
+            "role": "link"
+          },
+          "e54": {
+            "name": "",
+            "role": "button"
+          },
+          "e55": {
+            "name": "",
+            "role": "generic"
+          },
+          "e56": {
+            "name": "",
+            "role": "generic"
+          },
+          "e57": {
+            "name": "集团账号",
+            "role": "link"
+          },
+          "e58": {
+            "name": "",
+            "role": "paragraph"
+          },
+          "e59": {
+            "name": "",
+            "role": "paragraph"
+          },
+          "e6": {
+            "name": "",
+            "role": "Iframe"
+          },
+          "e60": {
+            "name": "费用",
+            "role": "link"
+          },
+          "e61": {
+            "name": "",
+            "role": "generic"
+          },
+          "e62": {
+            "name": "",
+            "role": "link"
+          },
+          "e63": {
+            "name": "",
+            "role": "link"
+          },
+          "e64": {
+            "name": "",
+            "role": "link"
+          },
+          "e65": {
+            "name": "",
+            "role": "link"
+          },
+          "e66": {
+            "name": "",
+            "role": "link"
+          },
+          "e67": {
+            "name": "",
+            "role": "link"
+          },
+          "e68": {
+            "name": "",
+            "role": "link"
+          },
+          "e69": {
+            "name": "",
+            "role": "link"
+          },
+          "e7": {
+            "name": "控制台文档",
+            "role": "link"
+          },
+          "e70": {
+            "name": "",
+            "role": "link"
+          },
+          "e71": {
+            "name": "",
+            "role": "link"
+          },
+          "e72": {
+            "name": "",
+            "role": "link"
+          },
+          "e73": {
+            "name": "",
+            "role": "link"
+          },
+          "e74": {
+            "name": "",
+            "role": "link"
+          },
+          "e75": {
+            "name": "",
+            "role": "link"
+          },
+          "e76": {
+            "name": "",
+            "role": "link"
+          },
+          "e77": {
+            "name": "",
+            "role": "link"
+          },
+          "e78": {
+            "name": "",
+            "role": "link"
+          },
+          "e79": {
+            "name": "统计详情",
+            "role": "heading"
+          },
+          "e8": {
+            "name": "API文档",
+            "role": "link"
+          },
+          "e80": {
+            "name": "存储用量",
+            "role": "radio"
+          },
+          "e81": {
+            "name": "对象数量",
+            "role": "radio"
+          },
+          "e82": {
+            "name": "外网下行流量",
+            "role": "radio"
+          },
+          "e83": {
+            "name": "内网流量",
+            "role": "radio"
+          },
+          "e84": {
+            "name": "CDN回源流量",
+            "role": "radio"
+          },
+          "e85": {
+            "name": "读请求数",
+            "role": "radio"
+          },
+          "e86": {
+            "name": "写请求数",
+            "role": "radio"
+          },
+          "e87": {
+            "name": "",
+            "role": "generic"
+          },
+          "e88": {
+            "name": "",
+            "role": "generic"
+          },
+          "e89": {
+            "name": "",
+            "role": "generic"
+          },
+          "e9": {
+            "name": "",
+            "role": "generic"
+          },
+          "e90": {
+            "name": "支持通过实例ID、IP、名称等搜索资源",
+            "role": "searchbox"
+          },
+          "e91": {
+            "name": "今天",
+            "role": "tab"
+          },
+          "e92": {
+            "name": "昨天",
+            "role": "tab"
+          },
+          "e93": {
+            "name": "近7天",
+            "role": "tab"
+          },
+          "e94": {
+            "name": "近15天",
+            "role": "tab"
+          },
+          "e95": {
+            "name": "近30天",
+            "role": "tab"
+          },
+          "e96": {
+            "name": "2026-06-20",
+            "role": "button"
+          },
+          "e97": {
+            "name": "",
+            "role": "generic"
+          },
+          "e98": {
+            "name": "",
+            "role": "generic"
+          },
+          "e99": {
+            "name": "",
+            "role": "generic"
+          }
+        },
+        "snapshot": "- generic\n  - generic\n    - generic\n      - generic [ref=e2] clickable [cursor:pointer, onclick]\n      - generic\n        - link \"腾讯云\" [ref=e15]\n          - image\n        - link \"控制台\" [ref=e16]\n          - image\n          - StaticText \"控制台\"\n      - generic\n        - generic\n          - searchbox \"支持通过实例ID、IP、名称等搜索资源\" [ref=e90]\n        - StaticText \"快捷键 /\"\n      - generic\n        - generic [ref=e17] clickable [onclick, tabindex]\n          - link \"集团账号\" [ref=e57]\n        - link \"备案\" [ref=e18]\n        - generic [ref=e19] clickable [onclick, tabindex]\n          - paragraph [ref=e58] clickable [cursor:pointer]\n            - StaticText \"工具\"\n        - generic [ref=e20] clickable [onclick, tabindex]\n          - paragraph [ref=e59] clickable [cursor:pointer]\n            - StaticText \"客服支持\"\n        - link \"试用\" [ref=e21]\n        - generic [ref=e22] clickable [onclick, tabindex]\n          - link \"费用\" [ref=e60]\n        - generic [ref=e23] clickable [onclick, tabindex]\n          - generic [ref=e61] clickable [cursor:pointer]\n            - image\n        - generic [ref=e24] clickable [cursor:pointer, onclick]\n          - image\n          - paragraph\n            - StaticText \"22\"\n        - generic [ref=e25] clickable [cursor:pointer, onclick]\n          - image\n      - generic [ref=e3] clickable [cursor:pointer]\n        - generic [ref=e26] clickable [cursor:pointer, onclick, tabindex]\n          - paragraph\n            - StaticText \"100045560701\"\n          - paragraph\n            - StaticText \"主账号\"\n          - SvgRoot\n            - StaticText \"1\"\n    - generic\n      - generic\n        - generic [ref=e4] clickable [onclick]\n          - image \"icon\"\n        - list\n          - listitem [level=1, ref=e27] clickable [cursor:pointer, onclick]\n            - link [ref=e62]\n          - listitem [level=1, ref=e28] clickable [cursor:pointer, onclick]\n            - link [ref=e63]\n          - listitem [level=1, ref=e29] clickable [cursor:pointer, onclick]\n            - link [ref=e64]\n          - listitem [level=1, ref=e30] clickable [cursor:pointer]\n            - link [ref=e65]\n          - listitem [level=1, ref=e31] clickable [cursor:pointer]\n            - link [ref=e66]\n          - listitem [level=1, ref=e32] clickable [cursor:pointer]\n            - link [ref=e67]\n          - listitem [level=1, ref=e33] clickable [cursor:pointer]\n          - listitem [level=1, ref=e34] clickable [cursor:pointer]\n            - link [ref=e68]\n          - listitem [level=1, ref=e35] clickable [cursor:pointer, onclick]\n            - link [ref=e69]\n          - listitem [level=1, ref=e36] clickable [cursor:pointer, onclick]\n            - link [ref=e70]\n          - listitem [level=1, ref=e37] clickable [cursor:pointer, onclick]\n            - link [ref=e71]\n          - listitem [level=1, ref=e38] clickable [cursor:pointer, onclick]\n            - link [ref=e72]\n          - listitem [level=1, ref=e39] clickable [cursor:pointer]\n          - listitem [level=1, ref=e40] clickable [cursor:pointer, onclick]\n            - link [ref=e73]\n          - listitem [level=1, ref=e41] clickable [cursor:pointer, onclick]\n            - link [ref=e74]\n          - listitem [level=1, ref=e42] clickable [cursor:pointer]\n          - listitem [level=1, ref=e43] clickable [cursor:pointer]\n            - link [ref=e75]\n          - listitem [level=1, ref=e44] clickable [cursor:pointer]\n            - link [ref=e76]\n          - listitem [level=1, ref=e45] clickable [cursor:pointer, onclick]\n            - link [ref=e77]\n          - listitem [level=1, ref=e46] clickable [cursor:pointer]\n            - link [ref=e78]\n        - generic [ref=e5] clickable [cursor:pointer]\n          - generic [ref=e47] clickable [cursor:pointer, onclick]\n            - image\n            - StaticText \"收起\"\n      - generic\n        - insertion\n          - generic\n            - Iframe [ref=e6]\n              - generic\n                - image\n                - StaticText \"SSL证书一键部署\"\n                - generic\n                  - generic\n                    - StaticText \"提升网站安全与信任，一键部署HTTPS加密，支持托管和自动化管理\"\n                    - generic\n                      - StaticText \"查看详情\"\n              - alert\n        - generic\n          - heading \"基础数据统计\" [level=2, ref=e1]\n          - generic\n            - link \"xuanfengyouxi-com-1392808679\" [ref=e48]\n              - emphasis\n                - StaticText \"xuanfengyouxi-com-1392808679\"\n          - generic\n            - link \"控制台文档\" [ref=e7]\n            - link \"API文档\" [ref=e8]\n        - generic\n          - tablist\n            - link \"标准存储\" [ref=e49]\n            - link \"智能分层存储\" [ref=e50]\n            - link \"低频存储\" [ref=e51]\n            - link \"归档存储\" [ref=e52]\n            - link \"深度归档存储\" [ref=e53]\n          - StaticText \"统计数据并非实时数据，数据延迟 10-30 分钟\"\n          - generic\n            - button [ref=e54]\n            - generic\n              - tablist\n                - tab \"今天\" [ref=e91]\n                - tab \"昨天\" [ref=e92]\n                - tab \"近7天\" [ref=e93]\n                - tab \"近15天\" [ref=e94]\n                - tab \"近30天\" [ref=e95]\n              - generic\n                - button \"2026-06-20\" [ref=e96]\n                  - StaticText \"2026-06-20\"\n          - generic\n            - StaticText \"存储用量\"\n            - emphasis\n              - StaticText \"0\"\n            - StaticText \"B\"\n            - StaticText \"对象数量\"\n            - emphasis\n              - StaticText \"0\"\n            - StaticText \"总流量 \"\n            - generic\n              - generic [ref=e97] clickable [cursor:pointer]\n            - emphasis\n              - StaticText \"0\"\n            - StaticText \"B\"\n            - StaticText \"总读请求数 \"\n            - generic\n              - generic [ref=e98] clickable [cursor:pointer]\n            - emphasis\n              - StaticText \"0\"\n            - StaticText \"次\"\n            - StaticText \"总写请求数 \"\n            - generic\n              - generic [ref=e99] clickable [cursor:pointer]\n            - emphasis\n              - StaticText \"0\"\n            - StaticText \"次\"\n          - heading \"统计详情\" [level=3, ref=e79]\n          - radiogroup\n            - radio \"存储用量\" [checked=true, ref=e80]\n            - radio \"对象数量\" [checked=false, ref=e81]\n            - radio \"外网下行流量\" [checked=false, ref=e82]\n            - radio \"内网流量\" [checked=false, ref=e83]\n            - radio \"CDN回源流量\" [checked=false, ref=e84]\n            - radio \"读请求数\" [checked=false, ref=e85]\n            - radio \"写请求数\" [checked=false, ref=e86]\n          - generic [ref=e87] clickable [onclick]\n            - SvgRoot\n              - StaticText \"No data to display\"\n              - group [ref=e101] clickable [onclick]\n                - generic [ref=e102] clickable [cursor:pointer]\n                  - StaticText \"存储用量\"\n  - generic\n    - generic\n      - image\n      - generic [ref=e55] clickable [onclick]\n        - image\n      - generic [ref=e88] clickable [cursor:pointer, onclick]\n        - image\n      - generic\n        - image\n      - generic [ref=e89] clickable [cursor:pointer]\n        - generic [ref=e100] clickable [cursor:pointer, onclick]\n          - button [ref=e103]\n      - generic [ref=e56] clickable [cursor:pointer, onclick]\n        - image\n  - StaticText \"腾讯云 - 控制台\"\n  - generic\n    - StaticText \"您对当前页面的整体感受是否满意？\"\n    - generic [ref=e9] clickable [cursor:pointer, onclick]\n      - image\n    - generic [ref=e10] clickable [cursor:pointer, onclick]\n      - image\n    - generic [ref=e11] clickable [cursor:pointer, onclick]\n      - image\n    - generic [ref=e12] clickable [cursor:pointer, onclick]\n      - image\n    - generic [ref=e13] clickable [cursor:pointer, onclick]\n      - image\n    - generic [ref=e14] clickable [cursor:pointer, onclick]\n    - StaticText \"非常不满意\"\n    - StaticText \"非常满意\""
+      },
+      "error": null
+    }
+  }
+}
