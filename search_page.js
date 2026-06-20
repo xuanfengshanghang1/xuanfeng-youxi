@@ -1,1 +1,0 @@
-document.body.innerText.match(/download|force|disposition|header|response/gi)
