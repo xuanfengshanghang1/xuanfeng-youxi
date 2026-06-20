@@ -1,0 +1,12 @@
+User-agent: *
+Allow: /
+
+# 炫锋商行 - 传奇手游装备/元宝回收交易平台
+# 禁止抓取后台和临时文件
+Disallow: /admin/
+Disallow: /seo-auto/
+Disallow: /img/temp/
+Disallow: /*.py$
+Disallow: /*.md$
+
+Sitemap: https://xuanfengshanghang1.github.io/xuanfeng-youxi/sitemap.xml
