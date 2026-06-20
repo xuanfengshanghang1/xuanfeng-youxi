@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>管理后台 - 炫锋商行</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --bg: #0f0f18; --bg-card: #1a1a2e; --bg-input: #14141f;
+            --border: #2a2a3a; --gold: #ffd700; --red: #e63946;
+            --text: #e8e8e8; --text-muted: #888; --green: #00c853;
+        }
+        body { font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+
+        /* 顶栏 */
+        .admin-header { background: var(--bg-card); border-bottom: 1px solid var(--border); padding: 16px 24px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; }
+        .admin-header h1 { font-size: 20px; color: var(--gold); display: flex; align-items: center; gap: 8px; }
+        .admin-header .back-link { color: var(--text-muted); font-size: 14px; text-decoration: none; }
+        .admin-header .back-link:hover { color: var(--gold); }
+
+        /* 布局 */
+        .admin-body { display: flex; min-height: calc(100vh - 56px); }
+        .sidebar { width: 220px; background: var(--bg-card); border-right: 1px solid var(--border); padding: 16px 0; flex-shrink: 0; }
+        .sidebar-item { display: block; padding: 12px 24px; color: var(--text-muted); font-size: 15px; cursor: pointer; border-left: 3px solid transparent; transition: all 0.2s; text-decoration: none; }
+        .sidebar-item:hover { color: var(--text); background: rgba(255,215,0,0.03); }
+        .sidebar-item.active { color: var(--gold); border-left-color: var(--gold); background: rgba(255,215,0,0.05); font-weight: 700; }
+
+        .main-content { flex: 1; padding: 32px; overflow-y: auto; max-width: 900px; }
+
+        /* 面板 */
+        .panel { display: none; }
+        .panel.active { display: block; }
+        .panel-title { font-size: 22px; font-weight: 900; color: var(--gold); margin-bottom: 24px; }
+        .panel-desc { color: var(--text-muted); font-size: 14px; margin-bottom: 24px; }
+
+        /* 表单 */
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; font-size: 14px; font-weight: 600; color: var(--gold); margin-bottom: 6px; }
+        .form-group .hint { font-size: 12px; color: var(--text-muted); margin-top: 4px; }
+        .form-input { width: 100%; padding: 10px 14px; background: var(--bg-input); border: 1px solid var(--border); border-radius: 6px; color: var(--text); font-size: 15px; outline: none; transition: border-color 0.2s; }
+        .form-input:focus { border-color: var(--gold); }
+        textarea.form-input { min-height: 80px; resize: vertical; font-family: inherit; }
+        select.form-input { cursor: pointer; }
+
+        /* 按钮 */
+        .btn { padding: 10px 24px; border: none; border-radius: 6px; font-size: 15px; font-weight: 700; cursor: pointer; transition: all 0.2s; }
+        .btn-primary { background: linear-gradient(135deg, var(--red), #b22d37); color: #fff; }
+        .btn-primary:hover { opacity: 0.9; transform: translateY(-1px); }
+        .btn-outline { background: transparent; color: var(--gold); border: 1px solid var(--gold); }
+        .btn-outline:hover { background: rgba(255,215,0,0.1); }
+        .btn-sm { padding: 6px 14px; font-size: 13px; }
+        .btn-danger { background: transparent; color: var(--red); border: 1px solid var(--red); }
+        .btn-danger:hover { background: rgba(230,57,70,0.1); }
+        .btn-row { display: flex; gap: 12px; margin-top: 24px; }
+
+        /* 列表项 */
+        .list-item { background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 16px 20px; margin-bottom: 12px; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+        .list-item:hover { border-color: rgba(255,215,0,0.3); }
+        .list-item-info { flex: 1; }
+        .list-item-info h4 { font-size: 15px; color: var(--text); margin-bottom: 4px; }
+        .list-item-info p { font-size: 13px; color: var(--text-muted); }
+        .list-item-actions { display: flex; gap: 8px; flex-shrink: 0; }
+
+        /* 行情表格编辑 */
+        .market-edit-row { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr 1fr auto; gap: 8px; align-items: center; margin-bottom: 8px; }
+        .market-edit-row .form-input { padding: 8px 10px; font-size: 13px; }
+
+        /* Toast */
+        .toast { position: fixed; top: 80px; right: 24px; background: var(--green); color: #fff; padding: 12px 24px; border-radius: 8px; font-size: 15px; font-weight: 600; z-index: 9999; opacity: 0; transform: translateY(-10px); transition: all 0.3s; pointer-events: none; }
+        .toast.show { opacity: 1; transform: translateY(0); }
+        .toast.error { background: var(--red); }
+
+        /* 移动端 */
+        @media (max-width: 768px) {
+            .admin-body { flex-direction: column; }
+            .sidebar { width: 100%; border-right: none; border-bottom: 1px solid var(--border); display: flex; overflow-x: auto; padding: 0; }
+            .sidebar-item { padding: 12px 16px; border-left: none; border-bottom: 3px solid transparent; white-space: nowrap; }
+            .sidebar-item.active { border-bottom-color: var(--gold); border-left-color: transparent; }
+            .main-content { padding: 20px 16px; }
+            .market-edit-row { grid-template-columns: 1fr 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-header">
+        <h1>⚙️ 炫锋商行 · 管理后台</h1>
+        <a href="index.html" class="back-link">← 返回官网</a>
+    </div>
+
+    <div class="admin-body">
+        <div class="sidebar">
+            <a class="sidebar-item active" onclick="switchPanel('config')">📝 站点配置</a>
+            <a class="sidebar-item" onclick="switchPanel('logo')">🖼 Logo管理</a>
+            <a class="sidebar-item" onclick="switchPanel('news')">📰 文章管理</a>
+            <a class="sidebar-item" onclick="switchPanel('market')">📊 行情管理</a>
+            <a class="sidebar-item" onclick="switchPanel('faq')">❓ FAQ管理</a>
+            <a class="sidebar-item" onclick="switchPanel('about')">📋 关于我们</a>
+        </div>
+
+        <div class="main-content">
+            <!-- 站点配置 -->
+            <div class="panel active" id="panel-config">
+                <h2 class="panel-title">📝 站点配置</h2>
+                <p class="panel-desc">修改后点击保存，全站信息自动同步更新</p>
+                <div class="form-group">
+                    <label>品牌名称</label>
+                    <input class="form-input" id="cfg-brandName" placeholder="炫锋商行">
+                </div>
+                <div class="form-group">
+                    <label>品牌口号</label>
+                    <input class="form-input" id="cfg-brandSlogan" placeholder="安全·担保·靠谱·长期">
+                </div>
+                <div class="form-group">
+                    <label>QQ号</label>
+                    <input class="form-input" id="cfg-qq" placeholder="370835291">
+                </div>
+                <div class="form-group">
+                    <label>微信号/公众号</label>
+                    <input class="form-input" id="cfg-wechat" placeholder="炫锋游戏搬砖">
+                </div>
+                <div class="form-group">
+                    <label>微信类型</label>
+                    <select class="form-input" id="cfg-wechatType">
+                        <option value="公众号">公众号</option>
+                        <option value="个人号">个人号</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>工作时间</label>
+                    <input class="form-input" id="cfg-workTime" placeholder="每日 9:00 - 24:00">
+                </div>
+                <div class="form-group">
+                    <label>滚动公告内容</label>
+                    <textarea class="form-input" id="cfg-notice" placeholder="📢 今日更新：..."></textarea>
+                    <div class="hint">显示在首页顶部滚动公告栏</div>
+                </div>
+                <div class="form-group">
+                    <label>SEO关键词（逗号分隔）</label>
+                    <textarea class="form-input" id="cfg-seoKeywords" rows="2"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>累计服务玩家</label>
+                    <input class="form-input" id="cfg-stats-players" placeholder="5000+">
+                </div>
+                <div class="form-group">
+                    <label>成功交易笔数</label>
+                    <input class="form-input" id="cfg-stats-trades" placeholder="10000+">
+                </div>
+                <div class="form-group">
+                    <label>客户满意度</label>
+                    <input class="form-input" id="cfg-stats-satisfaction" placeholder="98%+">
+                </div>
+                <div class="btn-row">
+                    <button class="btn btn-primary" onclick="saveConfig()">💾 保存配置</button>
+                    <button class="btn btn-outline" onclick="loadConfig()">🔄 重置</button>
+                </div>
+            </div>
+
+            <!-- Logo管理 -->
+            <div class="panel" id="panel-logo">
+                <h2 class="panel-title">🖼 Logo管理</h2>
+                <p class="panel-desc">切换Logo显示模式，自定义图标</p>
+                <div class="form-group">
+                    <label>Logo模式</label>
+                    <select class="form-input" id="cfg-logoType" onchange="toggleLogoFields()">
+                        <option value="svg">SVG图标（当前龙图标）</option>
+                        <option value="image">自定义图片</option>
+                        <option value="text">纯文字Logo</option>
+                    </select>
+                </div>
+                <div class="form-group" id="logo-image-group">
+                    <label>Logo图片路径</label>
+                    <input class="form-input" id="cfg-logoImage" placeholder="images/logo.png">
+                    <div class="hint">将图片放到网站目录下，填写相对路径</div>
+                </div>
+                <div class="form-group" id="logo-text-group">
+                    <label>文字Logo</label>
+                    <input class="form-input" id="cfg-logoText" placeholder="炫锋">
+                </div>
+                <div class="form-group">
+                    <label>SVG代码（仅svg模式生效）</label>
+                    <textarea class="form-input" id="cfg-svgLogo" rows="6" placeholder="粘贴SVG代码..."></textarea>
+                    <div class="hint">可粘贴自定义SVG图标代码替换默认龙图标</div>
+                </div>
+                <div id="logo-preview" style="background:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:24px;text-align:center;margin:16px 0;">
+                    <p style="color:var(--text-muted);font-size:13px;margin-bottom:8px;">预览效果</p>
+                    <div id="logo-preview-content" style="font-size:24px;color:var(--gold);font-weight:900;">⚔ 炫锋商行</div>
+                </div>
+                <div class="btn-row">
+                    <button class="btn btn-primary" onclick="saveConfig()">💾 保存</button>
+                    <button class="btn btn-outline" onclick="previewLogo()">👁 预览</button>
+                </div>
+            </div>
+
+            <!-- 文章管理 -->
+            <div class="panel" id="panel-news">
+                <h2 class="panel-title">📰 文章管理</h2>
+                <p class="panel-desc">管理攻略资讯页面的文章列表</p>
+                <div id="news-list"></div>
+                <div style="margin-top:20px;">
+                    <button class="btn btn-outline" onclick="addNews()">➕ 添加文章</button>
+                </div>
+            </div>
+
+            <!-- 行情管理 -->
+            <div class="panel" id="panel-market">
+                <h2 class="panel-title">📊 行情管理</h2>
+                <p class="panel-desc">更新元宝比例和账号行情</p>
+                <h3 style="color:var(--gold);margin:16px 0 12px;font-size:16px;">元宝比例行情</h3>
+                <div id="market-yb-list"></div>
+                <button class="btn btn-outline btn-sm" onclick="addMarketYb()" style="margin-top:8px;">➕ 添加行</button>
+
+                <h3 style="color:var(--gold);margin:24px 0 12px;font-size:16px;">账号行情参考</h3>
+                <div id="market-acc-list"></div>
+                <button class="btn btn-outline btn-sm" onclick="addMarketAcc()" style="margin-top:8px;">➕ 添加行</button>
+
+                <div class="btn-row">
+                    <button class="btn btn-primary" onclick="saveMarket()">💾 保存行情</button>
+                </div>
+            </div>
+
+            <!-- FAQ管理 -->
+            <div class="panel" id="panel-faq">
+                <h2 class="panel-title">❓ FAQ管理</h2>
+                <p class="panel-desc">管理常见问题页面的问答对</p>
+                <div id="faq-list-admin"></div>
+                <div style="margin-top:20px;">
+                    <button class="btn btn-outline" onclick="addFaq()">➕ 添加问题</button>
+                </div>
+            </div>
+
+            <!-- 关于我们 -->
+            <div class="panel" id="panel-about">
+                <h2 class="panel-title">📋 关于我们</h2>
+                <p class="panel-desc">编辑"关于我们"页面的内容</p>
+                <div class="form-group">
+                    <label>商行简介</label>
+                    <textarea class="form-input" id="cfg-about-intro" rows="4"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>经营理念（每行一条）</label>
+                    <textarea class="form-input" id="cfg-about-philosophy" rows="4"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>交易须知（每行一条）</label>
+                    <textarea class="form-input" id="cfg-about-rules" rows="4"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>合作咨询</label>
+                    <textarea class="form-input" id="cfg-about-coop" rows="2"></textarea>
+                </div>
+                <div class="btn-row">
+                    <button class="btn btn-primary" onclick="saveAbout()">💾 保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="toast" id="toast"></div>
+
+    <!-- 数据存储：用localStorage存编辑态，导出时写入文件 -->
+    <script>
+    // ===== 数据模型 =====
+    const DEFAULT_DATA = {
+        config: {
+            brandName: '炫锋商行',
+            brandSlogan: '安全·担保·靠谱·长期',
+            qq: '370835291',
+            wechat: '炫锋游戏搬砖',
+            wechatType: '公众号',
+            workTime: '每日 9:00 - 24:00',
+            logoType: 'svg',
+            logoImage: 'images/logo.png',
+            logoText: '炫锋',
+            svgLogo: '',
+            seoKeywords: '炫锋商行,炫锋传奇,炫锋游戏,传奇手游商行,传奇元宝交易,传奇账号回收,传奇手游装备交易,传奇代售平台',
+            notice: '📢 今日更新：热血传奇625服元宝现货 · 传奇世界高战号代售中 · 稀有装备多件上架 · 量大从优欢迎咨询',
+            stats: { players: '5000+', trades: '10000+', satisfaction: '98%+' },
+            socialLinks: { qq: 'https://wpa.qq.com/msgrdn?v=3&uin=370835291&site=qq&menu=yes', wechat: '' }
+        },
+        news: [
+            { tag: '热门', tagClass: 'hot', date: '2026-06-19', title: '热血传奇625服最新元宝比例及搬砖攻略', desc: '625服开服一个月，元宝比例稳定在1:12左右。本文详解高效搬砖路线、元宝获取技巧及每日收益参考...' },
+            { tag: '攻略', tagClass: '', date: '2026-06-18', title: '传奇世界高战号养成路线，零氪也能战力80万', desc: '从40级空号到80万战力，全程零氪路线规划。装备选择、技能搭配、副本优先级一文讲透...' },
+            { tag: '活动', tagClass: '', date: '2026-06-17', title: '热血传奇端午活动全攻略：限定坐骑/装备掉落汇总', desc: '端午节限时活动开启，限定坐骑「龙舟」和赤月装备碎片掉落。活动时间、副本打法、掉落概率全汇总...' },
+            { tag: '防骗', tagClass: '', date: '2026-06-16', title: '2026传奇手游交易防骗指南：最新骗局套路汇总', desc: '整理了近期高发的4种新型骗局，包括假客服、钓鱼群、虚假担保等。看完这篇，骗子绕道走...' },
+            { tag: '攻略', tagClass: '', date: '2026-06-15', title: '传奇3法师PK全攻略：技能连招与装备选择', desc: '法师PK的核心在于距离控制和爆发时机。详解法师对战士、道士的连招套路及装备属性优先级...' }
+        ],
+        marketYb: [
+            { game: '热血传奇', server: '625服', buyRatio: '1:12', sellRatio: '1:11', date: '06-19', status: 'up' },
+            { game: '热血传奇', server: 'QQ334服', buyRatio: '1:13.5', sellRatio: '1:12.5', date: '06-19', status: 'stable' },
+            { game: '热血传奇', server: '219服', buyRatio: '1:15', sellRatio: '1:14', date: '06-19', status: 'down' },
+            { game: '传奇世界', server: '88服', buyRatio: '1:10', sellRatio: '1:9', date: '06-19', status: 'stable' },
+            { game: '传奇世界', server: '55服', buyRatio: '1:11', sellRatio: '1:10', date: '06-18', status: 'up' },
+            { game: '传奇3', server: '合1服', buyRatio: '1:8', sellRatio: '1:7', date: '06-18', status: 'stable' }
+        ],
+        marketAcc: [
+            { game: '热血传奇', type: '85万战力成品号', price: '800-1500', hot: 'hot', note: '赤月套+稀有坐骑' },
+            { game: '热血传奇', type: '40级空号', price: '50-150', hot: 'stable', note: '可塑性高' },
+            { game: '传奇世界', type: '满级法师号', price: '600-1200', hot: 'hot', note: '含稀有坐骑' },
+            { game: '传奇世界', type: '半成品道士号', price: '200-500', hot: 'stable', note: '有宠物' },
+            { game: '传奇3', type: '高战号', price: '500-2000', hot: 'up', note: '装备齐全溢价' }
+        ],
+        faqs: [
+            { category: '元宝交易', items: [
+                { q: '买元宝怎么操作？多久能到账？', a: '联系客服告知区服和数量，确认比例后付款，元宝即时到账。热门区服5分钟内完成，冷门区服可能需要等待安排。' },
+                { q: '元宝比例是固定的吗？', a: '不是固定的，不同区服、不同时期比例会浮动。我们每日更新行情，建议交易前先咨询客服确认最新比例。' },
+                { q: '买元宝有数量限制吗？', a: '没有上限，量大的话比例可议，更优惠。最低交易量各服不同，请咨询客服。' },
+                { q: '买元宝会被封号吗？', a: '我们走正规渠道，到账方式安全。但请注意，任何游戏交易都存在一定风险，建议不要在短时间内大量交易。' }
+            ]},
+            { category: '账号交易', items: [
+                { q: '买账号安全吗？会不会被找回？', a: '我们全程担保交易，要求卖家提供身份证信息。如出现找回，商行全额赔付。' },
+                { q: '卖账号怎么估价？', a: '联系客服发账号截图（等级、战力、装备、区服等），3分钟内出估价。我们承诺公道估价，不压价。' },
+                { q: '账号交易要多久？', a: '买家确认后，客服协助过户，一般30分钟内完成。复杂账号可能需要1-2小时。' },
+                { q: '代售和直接回收有什么区别？', a: '代售：帮你在商行挂牌出售，价格可自定，卖出去后扣少量手续费。回收：商行直接收购，即时打款，价格略低于代售价但快速变现。' }
+            ]},
+            { category: '装备道具', items: [
+                { q: '装备交易怎么保证是真实的？', a: '交易前提供装备属性截图确认，当面交易验货。担保期间如发现属性不符，全额退款。' },
+                { q: '稀有装备有货吗？', a: '热门装备通常有现货，具体请咨询客服。如果没有现货可以预订，到货后第一时间通知。' }
+            ]},
+            { category: '安全与售后', items: [
+                { q: '怎么确认你们不是骗子？', a: '我们长期稳定经营，口碑可查。建议新客户先小额交易试水，满意后再大额合作。' },
+                { q: '交易后有问题怎么办？', a: '交易完成后有任何问题随时联系客服。账号找回全额赔付，元宝不足补发，装备问题协商解决。售后不设期限。' },
+                { q: '支持哪些付款方式？', a: '支付宝、微信、QQ钱包均可。大额交易支持银行卡转账。' }
+            ]}
+        ],
+        about: {
+            intro: '炫锋商行是一家专注于传奇手游虚拟物品交易的服务平台，主营元宝交易、账号买卖、装备道具代售、游戏代练、账号回收等业务。我们长期稳定经营，以"安全、担保、靠谱、长期"为服务宗旨，致力于为传奇玩家提供最可信赖的交易服务。',
+            philosophy: '诚信为本——报价即成交价，不套路、不加价、不杀猪\n安全第一——全程担保交易，出现问题全额赔付\n长期经营——不做一锤子买卖，口碑是我们最大的资产\n服务至上——交易完成≠服务结束，终身售后答疑',
+            rules: '所有交易均通过商行担保，不接私单、不走私下\n交易前请确认商品信息、价格、区服无误\n账号交易请保留交易凭证和卖家身份证信息\n如遇到任何问题，请在48小时内联系客服处理\n本站所有交易基于玩家自愿原则，请遵守游戏官方相关规定',
+            coop: '诚招代理、工作室、散人合作伙伴。零门槛入驻，稳定货源，高额返利，专业培训。有意者请通过QQ/微信联系客服，备注"代理合作"。'
+        }
+    };
+
+    // ===== 存储 =====
+    function getData() {
+        const saved = localStorage.getItem('xuanfeng_admin_data');
+        return saved ? JSON.parse(saved) : JSON.parse(JSON.stringify(DEFAULT_DATA));
+    }
+    function saveData(data) {
+        localStorage.setItem('xuanfeng_admin_data', JSON.stringify(data));
+    }
+
+    // ===== 面板切换 =====
+    function switchPanel(name) {
+        document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+        document.querySelectorAll('.sidebar-item').forEach(s => s.classList.remove('active'));
+        document.getElementById('panel-' + name).classList.add('active');
+        event.target.classList.add('active');
+    }
+
+    // ===== Toast =====
+    function showToast(msg, isError) {
+        const t = document.getElementById('toast');
+        t.textContent = msg;
+        t.className = 'toast show' + (isError ? ' error' : '');
+        setTimeout(() => t.className = 'toast', 2500);
+    }
+
+    // ===== 站点配置 =====
+    function loadConfig() {
+        const d = getData().config;
+        document.getElementById('cfg-brandName').value = d.brandName || '';
+        document.getElementById('cfg-brandSlogan').value = d.brandSlogan || '';
+        document.getElementById('cfg-qq').value = d.qq || '';
+        document.getElementById('cfg-wechat').value = d.wechat || '';
+        document.getElementById('cfg-wechatType').value = d.wechatType || '公众号';
+        document.getElementById('cfg-workTime').value = d.workTime || '';
+        document.getElementById('cfg-notice').value = d.notice || '';
+        document.getElementById('cfg-seoKeywords').value = d.seoKeywords || '';
+        document.getElementById('cfg-stats-players').value = (d.stats && d.stats.players) || '';
+        document.getElementById('cfg-stats-trades').value = (d.stats && d.stats.trades) || '';
+        document.getElementById('cfg-stats-satisfaction').value = (d.stats && d.stats.satisfaction) || '';
+        document.getElementById('cfg-logoType').value = d.logoType || 'svg';
+        document.getElementById('cfg-logoImage').value = d.logoImage || '';
+        document.getElementById('cfg-logoText').value = d.logoText || '';
+        document.getElementById('cfg-svgLogo').value = d.svgLogo || '';
+        toggleLogoFields();
+        // About
+        const a = getData().about;
+        document.getElementById('cfg-about-intro').value = a.intro || '';
+        document.getElementById('cfg-about-philosophy').value = a.philosophy || '';
+        document.getElementById('cfg-about-rules').value = a.rules || '';
+        document.getElementById('cfg-about-coop').value = a.coop || '';
+    }
+
+    function saveConfig() {
+        const data = getData();
+        data.config.brandName = document.getElementById('cfg-brandName').value;
+        data.config.brandSlogan = document.getElementById('cfg-brandSlogan').value;
+        data.config.qq = document.getElementById('cfg-qq').value;
+        data.config.wechat = document.getElementById('cfg-wechat').value;
+        data.config.wechatType = document.getElementById('cfg-wechatType').value;
+        data.config.workTime = document.getElementById('cfg-workTime').value;
+        data.config.notice = document.getElementById('cfg-notice').value;
+        data.config.seoKeywords = document.getElementById('cfg-seoKeywords').value;
+        data.config.stats = {
+            players: document.getElementById('cfg-stats-players').value,
+            trades: document.getElementById('cfg-stats-trades').value,
+            satisfaction: document.getElementById('cfg-stats-satisfaction').value
+        };
+        data.config.logoType = document.getElementById('cfg-logoType').value;
+        data.config.logoImage = document.getElementById('cfg-logoImage').value;
+        data.config.logoText = document.getElementById('cfg-logoText').value;
+        data.config.svgLogo = document.getElementById('cfg-svgLogo').value;
+        saveData(data);
+        showToast('✅ 配置已保存！请刷新官网页面查看效果');
+        // 生成config.js内容供下载
+        generateConfigFile(data);
+    }
+
+    function generateConfigFile(data) {
+        const c = data.config;
+        const js = `// 炫锋商行 - 全站配置中心（由管理后台生成）
+const SITE_CONFIG = {
+  brandName: '${c.brandName}',
+  brandSlogan: '${c.brandSlogan}',
+  qq: '${c.qq}',
+  wechat: '${c.wechat}',
+  wechatType: '${c.wechatType}',
+  workTime: '${c.workTime}',
+  logoType: '${c.logoType}',
+  logoImage: '${c.logoImage}',
+  logoText: '${c.logoText}',
+  svgLogo: \`${c.svgLogo}\`,
+  seoKeywords: '${c.seoKeywords}',
+  stats: { players: '${c.stats.players}', trades: '${c.stats.trades}', satisfaction: '${c.stats.satisfaction}' },
+  socialLinks: { qq: 'https://wpa.qq.com/msgrdn?v=3&uin=${c.qq}&site=qq&menu=yes', wechat: '' },
+  notice: '${c.notice}'
+};`;
+        // 创建下载链接
+        const blob = new Blob([js], { type: 'text/javascript' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url; a.download = 'config.js';
+        // 不自动下载，保存到变量
+        window._configJsUrl = url;
+    }
+
+    function toggleLogoFields() {
+        const type = document.getElementById('cfg-logoType').value;
+        document.getElementById('logo-image-group').style.display = type === 'image' ? 'block' : 'none';
+        document.getElementById('logo-text-group').style.display = type === 'text' ? 'block' : 'none';
+    }
+
+    function previewLogo() {
+        const type = document.getElementById('cfg-logoType').value;
+        const el = document.getElementById('logo-preview-content');
+        const brand = document.getElementById('cfg-brandName').value || '炫锋商行';
+        if (type === 'svg') {
+            const svg = document.getElementById('cfg-svgLogo').value;
+            el.innerHTML = (svg || '⚔') + ' ' + brand;
+        } else if (type === 'image') {
+            const img = document.getElementById('cfg-logoImage').value;
+            el.innerHTML = `<img src="${img}" style="height:32px;vertical-align:middle"> ${brand}`;
+        } else {
+            el.innerHTML = `<span style="font-size:28px;font-weight:900">${document.getElementById('cfg-logoText').value || '炫锋'}</span>`;
+        }
+    }
+
+    // ===== 文章管理 =====
+    function renderNews() {
+        const list = getData().news;
+        const el = document.getElementById('news-list');
+        el.innerHTML = list.map((n, i) => `
+            <div class="list-item">
+                <div class="list-item-info">
+                    <h4><span style="color:var(--red);font-size:12px;margin-right:6px;">[${n.tag}]</span>${n.title}</h4>
+                    <p>${n.date} · ${n.desc.substring(0, 40)}...</p>
+                </div>
+                <div class="list-item-actions">
+                    <button class="btn btn-outline btn-sm" onclick="editNews(${i})">编辑</button>
+                    <button class="btn btn-danger btn-sm" onclick="deleteNews(${i})">删除</button>
+                </div>
+            </div>
+        `).join('');
+    }
+
+    function addNews() {
+        const data = getData();
+        data.news.unshift({ tag: '攻略', tagClass: '', date: new Date().toISOString().slice(0,10), title: '新文章标题', desc: '文章摘要...' });
+        saveData(data);
+        renderNews();
+    }
+
+    function editNews(i) {
+        const data = getData();
+        const n = data.news[i];
+        const newTitle = prompt('文章标题：', n.title);
+        if (newTitle === null) return;
+        const newDesc = prompt('文章摘要：', n.desc);
+        if (newDesc === null) return;
+        const newTag = prompt('标签（热门/攻略/活动/防骗）：', n.tag);
+        if (newTag === null) return;
+        n.title = newTitle; n.desc = newDesc; n.tag = newTag;
+        n.tagClass = newTag === '热门' ? 'hot' : '';
+        n.date = new Date().toISOString().slice(0,10);
+        saveData(data);
+        renderNews();
+        showToast('✅ 文章已更新');
+    }
+
+    function deleteNews(i) {
+        if (!confirm('确定删除这篇文章？')) return;
+        const data = getData();
+        data.news.splice(i, 1);
+        saveData(data);
+        renderNews();
+        showToast('🗑 已删除');
+    }
+
+    // ===== 行情管理 =====
+    function renderMarket() {
+        const data = getData();
+        // 元宝
+        const ybEl = document.getElementById('market-yb-list');
+        ybEl.innerHTML = data.marketYb.map((r, i) => `
+            <div class="market-edit-row">
+                <input class="form-input" value="${r.game}" onchange="updateMarketYb(${i},'game',this.value)" placeholder="游戏">
+                <input class="form-input" value="${r.server}" onchange="updateMarketYb(${i},'server',this.value)" placeholder="区服">
+                <input class="form-input" value="${r.buyRatio}" onchange="updateMarketYb(${i},'buyRatio',this.value)" placeholder="买入比例">
+                <input class="form-input" value="${r.sellRatio}" onchange="updateMarketYb(${i},'sellRatio',this.value)" placeholder="卖出比例">
+                <select class="form-input" onchange="updateMarketYb(${i},'status',this.value)">
+                    <option value="up" ${r.status==='up'?'selected':''}>↑ 涨</option>
+                    <option value="stable" ${r.status==='stable'?'selected':''}>→ 稳</option>
+                    <option value="down" ${r.status==='down'?'selected':''}>↓ 跌</option>
+                </select>
+                <button class="btn btn-danger btn-sm" onclick="deleteMarketYb(${i})">✕</button>
+            </div>
+        `).join('');
+        // 账号
+        const accEl = document.getElementById('market-acc-list');
+        accEl.innerHTML = data.marketAcc.map((r, i) => `
+            <div class="market-edit-row">
+                <input class="form-input" value="${r.game}" onchange="updateMarketAcc(${i},'game',this.value)" placeholder="游戏">
+                <input class="form-input" value="${r.type}" onchange="updateMarketAcc(${i},'type',this.value)" placeholder="账号类型">
+                <input class="form-input" value="${r.price}" onchange="updateMarketAcc(${i},'price',this.value)" placeholder="价格区间">
+                <select class="form-input" onchange="updateMarketAcc(${i},'hot',this.value)">
+                    <option value="hot" ${r.hot==='hot'?'selected':''}>🔥 热门</option>
+                    <option value="up" ${r.hot==='up'?'selected':''}>↑ 涨价</option>
+                    <option value="stable" ${r.hot==='stable'?'selected':''}>一般</option>
+                </select>
+                <input class="form-input" value="${r.note}" onchange="updateMarketAcc(${i},'note',this.value)" placeholder="备注">
+                <button class="btn btn-danger btn-sm" onclick="deleteMarketAcc(${i})">✕</button>
+            </div>
+        `).join('');
+    }
+
+    function updateMarketYb(i, key, val) { const d = getData(); d.marketYb[i][key] = val; saveData(d); }
+    function updateMarketAcc(i, key, val) { const d = getData(); d.marketAcc[i][key] = val; saveData(d); }
+    function addMarketYb() { const d = getData(); d.marketYb.push({game:'',server:'',buyRatio:'',sellRatio:'',date:new Date().toISOString().slice(5,10),status:'stable'}); saveData(d); renderMarket(); }
+    function addMarketAcc() { const d = getData(); d.marketAcc.push({game:'',type:'',price:'',hot:'stable',note:''}); saveData(d); renderMarket(); }
+    function deleteMarketYb(i) { const d = getData(); d.marketYb.splice(i,1); saveData(d); renderMarket(); }
+    function deleteMarketAcc(i) { const d = getData(); d.marketAcc.splice(i,1); saveData(d); renderMarket(); }
+    function saveMarket() { showToast('✅ 行情数据已保存！需导出生成HTML文件后才能在官网生效'); }
+
+    // ===== FAQ管理 =====
+    function renderFaqs() {
+        const faqs = getData().faqs;
+        const el = document.getElementById('faq-list-admin');
+        el.innerHTML = faqs.map((cat, ci) => `
+            <div style="margin-bottom:24px;">
+                <div style="display:flex;align-items:center;gap:12px;margin-bottom:8px;">
+                    <h3 style="color:var(--gold);font-size:16px;">${cat.category}</h3>
+                    <button class="btn btn-outline btn-sm" onclick="addFaqItem(${ci})">➕ 添加问题</button>
+                    <button class="btn btn-danger btn-sm" onclick="deleteFaqCat(${ci})">删除分类</button>
+                </div>
+                ${cat.items.map((item, ii) => `
+                    <div class="list-item">
+                        <div class="list-item-info">
+                            <h4>Q: ${item.q}</h4>
+                            <p>A: ${item.a.substring(0, 60)}...</p>
+                        </div>
+                        <div class="list-item-actions">
+                            <button class="btn btn-outline btn-sm" onclick="editFaqItem(${ci},${ii})">编辑</button>
+                            <button class="btn btn-danger btn-sm" onclick="deleteFaqItem(${ci},${ii})">删除</button>
+                        </div>
+                    </div>
+                `).join('')}
+            </div>
+        `).join('');
+    }
+
+    function addFaq() {
+        const cat = prompt('新分类名称：');
+        if (!cat) return;
+        const d = getData(); d.faqs.push({category: cat, items: []}); saveData(d); renderFaqs();
+    }
+
+    function deleteFaqCat(ci) {
+        if (!confirm('确定删除整个分类？')) return;
+        const d = getData(); d.faqs.splice(ci, 1); saveData(d); renderFaqs();
+    }
+
+    function addFaqItem(ci) {
+        const q = prompt('问题：');
+        if (!q) return;
+        const a = prompt('回答：');
+        if (!a) return;
+        const d = getData(); d.faqs[ci].items.push({q, a}); saveData(d); renderFaqs();
+        showToast('✅ 已添加');
+    }
+
+    function editFaqItem(ci, ii) {
+        const d = getData();
+        const item = d.faqs[ci].items[ii];
+        const q = prompt('问题：', item.q);
+        if (q === null) return;
+        const a = prompt('回答：', item.a);
+        if (a === null) return;
+        item.q = q; item.a = a;
+        saveData(d); renderFaqs();
+        showToast('✅ 已更新');
+    }
+
+    function deleteFaqItem(ci, ii) {
+        if (!confirm('确定删除？')) return;
+        const d = getData(); d.faqs[ci].items.splice(ii, 1); saveData(d); renderFaqs();
+    }
+
+    // ===== 关于我们 =====
+    function saveAbout() {
+        const d = getData();
+        d.about = {
+            intro: document.getElementById('cfg-about-intro').value,
+            philosophy: document.getElementById('cfg-about-philosophy').value,
+            rules: document.getElementById('cfg-about-rules').value,
+            coop: document.getElementById('cfg-about-coop').value
+        };
+        saveData(d);
+        showToast('✅ 关于我们已保存');
+    }
+
+    // ===== 导出功能 =====
+    function exportAll() {
+        const data = getData();
+        // 生成config.js
+        generateConfigFile(data);
+        // 提示
+        showToast('📁 配置文件已准备，点击下载 config.js 替换网站目录中的文件');
+        if (window._configJsUrl) {
+            const a = document.createElement('a');
+            a.href = window._configJsUrl;
+            a.download = 'config.js';
+            a.click();
+        }
+    }
+
+    // ===== 初始化 =====
+    document.addEventListener('DOMContentLoaded', () => {
+        loadConfig();
+        renderNews();
+        renderMarket();
+        renderFaqs();
+    });
+    </script>
+</body>
+</html>
