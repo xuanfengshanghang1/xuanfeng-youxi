@@ -69,7 +69,7 @@
                 <span class="hero-badge">💰 当天打当天结</span>
             </div>
             <div class="hero-actions">
-                <a href="agent.html" class="btn btn-primary btn-lg">了解详情 · 加入打金</a>
+                <a href="agent.html" class="btn btn-primary btn-lg hero-join-btn" id="heroJoinBtn">了解详情 · 加入打金 ↓</a>
                 <a href="business.html" class="btn btn-outline btn-lg">查看回收品类</a>
             </div>
         </div>
@@ -255,7 +255,60 @@
         </div>
     </footer>
 
+    <!-- 微信二维码弹窗 -->
+    <div class="qr-popup" id="qrPopup">
+        <div class="qr-popup-inner">
+            <button class="qr-popup-close" id="qrPopupClose">✕</button>
+            <h3>扫码添加客服微信</h3>
+            <p class="qr-popup-sub">添加时报"打金"两个字，商行客服直接对接</p>
+            <div class="qr-img-wrap">
+                <img src="img/wechat_qr.png" alt="微信二维码" onerror="this.parentElement.innerHTML='<div class=\'qr-placeholder\'>请上传微信二维码图片<br><small>img/wechat_qr.png</small></div>'">
+            </div>
+            <p class="qr-popup-note">或搜索微信号：<strong>炫锋游戏搬砖</strong></p>
+            <p class="qr-popup-note">工作时间：每日 9:00 - 24:00</p>
+        </div>
+    </div>
+
     <script src="config.js"></script>
     <script src="main.js"></script>
+    <script>
+    (function(){
+        var btn = document.getElementById('heroJoinBtn');
+        var popup = document.getElementById('qrPopup');
+        var closeBtn = document.getElementById('qrPopupClose');
+        if (!btn || !popup) return;
+
+        btn.addEventListener('mouseenter', function(){
+            if (window.innerWidth >= 768) popup.classList.add('active');
+        });
+        btn.addEventListener('mouseleave', function(){
+            if (window.innerWidth >= 768) {
+                setTimeout(function(){
+                    if (!popup.matches(':hover')) popup.classList.remove('active');
+                }, 100);
+            }
+        });
+        popup.addEventListener('mouseleave', function(){
+            if (window.innerWidth >= 768) popup.classList.remove('active');
+        });
+        popup.addEventListener('mouseenter', function(){
+            popup.classList.add('active');
+        });
+
+        btn.addEventListener('click', function(e){
+            if (window.innerWidth < 768) {
+                e.preventDefault();
+                popup.classList.add('active');
+            }
+        });
+
+        closeBtn.addEventListener('click', function(){
+            popup.classList.remove('active');
+        });
+        popup.addEventListener('click', function(e){
+            if (e.target === popup) popup.classList.remove('active');
+        });
+    })();
+    </script>
 </body>
 </html>
