@@ -47,8 +47,9 @@ a:hover { color: var(--red); }
 .logo:hover { color: var(--gold); }
 .logo-icon { font-size: 28px; }
 
-.nav-links { display: flex; list-style: none; gap: 4px; }
-.nav-links a { padding: 8px 16px; border-radius: var(--radius); color: var(--text); font-size: 15px; font-weight: 500; transition: all 0.3s; }
+.nav-links { display: flex; list-style: none; gap: 2px; flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; }
+.nav-links::-webkit-scrollbar { display: none; }
+.nav-links a { padding: 8px 10px; border-radius: var(--radius); color: var(--text); font-size: 14px; font-weight: 500; transition: all 0.3s; white-space: nowrap; }
 .nav-links a:hover, .nav-links a.active { color: var(--gold); background: rgba(255,215,0,0.1); }
 .nav-cta { background: var(--red) !important; color: #fff !important; font-weight: 700 !important; }
 .nav-cta:hover { background: var(--red-dark) !important; }
