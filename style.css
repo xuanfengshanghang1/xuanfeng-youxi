@@ -694,6 +694,66 @@ a:hover { color: var(--red); }
     font-weight: bold;
 }
 
-.page-btn {
+/* ========== 攻略资讯列表页（news.html）========== */
+
+.articles-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 24px;
+    margin-top: 32px;
+}
+
+.article-card {
+    background: var(--bg-card);
+    border-radius: var(--radius);
+    padding: 28px;
+    border: 1px solid var(--border);
+    transition: transform 0.2s, border-color 0.2s;
+    display: flex;
+    flex-direction: column;
+}
+
+.article-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--gold);
+}
+
+.card-badge {
+    display: inline-block;
+    background: var(--gold);
+    color: var(--bg-dark);
+    padding: 4px 14px;
+    border-radius: 20px;
+    font-size: 12px;
     font-weight: bold;
+    margin-bottom: 14px;
+    align-self: flex-start;
+}
+
+.card-title {
+    font-size: 18px;
+    color: #fff;
+    margin: 0 0 12px 0;
+    line-height: 1.4;
+}
+
+.card-excerpt {
+    color: var(--text-muted);
+    font-size: 14px;
+    line-height: 1.7;
+    margin-bottom: 20px;
+    flex-grow: 1;
+}
+
+.card-link {
+    display: inline-block;
+    color: var(--gold);
+    font-size: 14px;
+    font-weight: bold;
+    text-decoration: none;
+    transition: opacity 0.2s;
+}
+
+.card-link:hover {
+    opacity: 0.8;
 }
