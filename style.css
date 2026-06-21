@@ -456,3 +456,107 @@ a:hover { color: var(--red); }
     0% { transform: translateX(100vw); }
     100% { transform: translateX(-100%); }
 }
+
+/* ===== 打金教程页 ===== */
+.guide-content {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.guide-section {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 32px;
+    margin-bottom: 24px;
+}
+
+.guide-section h2 {
+    font-size: 24px;
+    color: var(--gold);
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid rgba(255,215,0,0.2);
+}
+
+.guide-section h3 {
+    font-size: 18px;
+    color: var(--text);
+    margin-top: 20px;
+    margin-bottom: 12px;
+};
+
+.guide-section p {
+    color: var(--text-muted);
+    line-height: 1.8;
+    margin-bottom: 12px;
+}
+
+.guide-section ul,
+.guide-section ol {
+    color: var(--text-muted);
+    line-height: 1.8;
+    margin-bottom: 16px;
+    padding-left: 24px;
+}
+
+.guide-section li {
+    margin-bottom: 8px;
+}
+
+.guide-note {
+    background: rgba(255,215,0,0.05);
+    border-left: 4px solid var(--gold);
+    padding: 16px 20px;
+    margin: 20px 0;
+    border-radius: 4px;
+    color: var(--text-muted);
+    line-height: 1.8;
+}
+
+.guide-note.risk {
+    background: rgba(230,57,70,0.05);
+    border-left-color: var(--red);
+}
+
+.guide-section .highlight {
+    color: var(--gold);
+    font-weight: 700;
+    background: rgba(255,215,0,0.08);
+    padding: 2px 8px;
+    border-radius: 4px;
+}
+
+.guide-section .btn-primary {
+    display: inline-block;
+    background: linear-gradient(135deg, var(--gold-dark), var(--gold));
+    color: var(--bg-dark);
+    padding: 12px 32px;
+    border-radius: var(--radius);
+    font-weight: 900;
+    font-size: 16px;
+    margin-top: 16px;
+    transition: all 0.3s;
+}
+
+.guide-section .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 20px rgba(255,215,0,0.3);
+    color: var(--bg-dark);
+}
+
+/* 教程页的FAQ样式 */
+.guide-section .faq-item {
+    background: var(--bg-section);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px;
+    margin-bottom: 16px;
+}
+
+.guide-section .faq-item h3 {
+    font-size: 16px;
+    color: var(--gold);
+    margin-top: 0;
+    margin-bottom: 12px;
+}
